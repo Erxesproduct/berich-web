@@ -1,0 +1,339 @@
+@import "tailwindcss";
+
+/*
+ * «Gold & ledger»: the logo's swan gold and the kraft-gold notebook cover on warm paper, espresso ink,
+ * with the playful bits of a well-kept money notebook: highlighter lime, sticker pink, money green.
+ */
+@theme {
+  --color-paper: #fbf6ec;
+  --color-sheet: #fffdf8;
+  --color-cream: #f3e9d6;
+  --color-kraft: #e6cfa4;
+  --color-gold: #b5854b;
+  --color-gold-2: #d8b27a;
+  --color-gold-3: #8a5f2c;
+  --color-ink: #22190f;
+  --color-ink-2: #5a4a38;
+  --color-mute: #8a7964;
+  --color-line: #e6dac5;
+  --color-hi: #e4f35a;
+  --color-blush: #f7c9d4;
+  --color-pink: #e0577d;
+  --color-money: #1d4a37;
+  --color-money-2: #2c6b50;
+  --color-mint: #d3ead7;
+
+  --font-display: var(--nf-display), "Montserrat Alternates", system-ui, sans-serif;
+  --font-sans: var(--nf-sans), "Inter Tight", system-ui, sans-serif;
+  --font-hand: var(--nf-hand), "Caveat", cursive;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  ::selection {
+    background: var(--color-hi);
+    color: var(--color-ink);
+  }
+  /* grid children may shrink below their content, so a long word never pushes a column past the screen */
+  .grid > * {
+    min-width: 0;
+  }
+}
+
+/* Site classes sit in the components layer: Tailwind utilities on the same element still win. */
+@layer components {
+  .display {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .hand {
+    font-family: var(--font-hand);
+    font-weight: 500;
+    line-height: 1.1;
+  }
+  .kicker {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+  .wrap {
+    width: 100%;
+    max-width: 1240px;
+    margin-inline: auto;
+    padding-inline: 16px;
+  }
+  @media (min-width: 768px) {
+    .wrap {
+      padding-inline: 36px;
+    }
+  }
+
+  /* a highlighter stroke behind a word, a little uneven like a real marker */
+  .hl {
+    background-image: linear-gradient(100deg, transparent 0.3em, var(--hl, var(--color-hi)) 0.35em, var(--hl, var(--color-hi)) calc(100% - 0.3em), transparent calc(100% - 0.25em));
+    background-size: 100% 0.5em;
+    background-position: 0 88%;
+    background-repeat: no-repeat;
+    padding-inline: 0.12em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+  .hl-in {
+    animation: hl-in 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) 0.35s both;
+  }
+  @keyframes hl-in {
+    from {
+      background-size: 0% 0.5em;
+    }
+  }
+
+  /* ruled notebook paper with a margin line */
+  .ruled {
+    background-color: var(--color-sheet);
+    background-image:
+      linear-gradient(90deg, transparent 38px, rgb(224 87 125 / 0.35) 38px, rgb(224 87 125 / 0.35) 39px, transparent 39px),
+      repeating-linear-gradient(180deg, transparent 0 31px, rgb(138 95 44 / 0.16) 31px 32px);
+  }
+  /* a squared page for numbers */
+  .grid-paper {
+    background-color: var(--color-sheet);
+    background-image:
+      linear-gradient(rgb(138 95 44 / 0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgb(138 95 44 / 0.1) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  /* a sticker: thick white edge and a soft lift */
+  .sticker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4em;
+    border-radius: 999px;
+    border: 3px solid #fff;
+    box-shadow: 0 10px 22px -12px rgb(34 25 15 / 0.45);
+    font-weight: 700;
+  }
+  /* washi tape strip holding a photo */
+  .tape {
+    position: absolute;
+    width: 92px;
+    height: 26px;
+    background: repeating-linear-gradient(135deg, rgb(247 201 212 / 0.85) 0 8px, rgb(255 255 255 / 0.7) 8px 16px);
+    box-shadow: 0 2px 6px rgb(34 25 15 / 0.12);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 54px;
+    padding-inline: 28px;
+    border-radius: 999px;
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    transition:
+      transform 0.25s cubic-bezier(0.3, 1.6, 0.6, 1),
+      box-shadow 0.25s,
+      background-color 0.25s,
+      color 0.25s;
+  }
+  .btn:active {
+    transform: translateY(1px) scale(0.98);
+  }
+  /* chunky «pressable» button: a hard shadow it sits on */
+  .btn-ink {
+    background: var(--color-ink);
+    color: var(--color-paper);
+    box-shadow: 0 5px 0 var(--color-gold);
+  }
+  .btn-ink:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 0 var(--color-gold);
+  }
+  .btn-gold {
+    background: var(--color-gold);
+    color: #fff;
+    box-shadow: 0 5px 0 var(--color-gold-3);
+  }
+  .btn-gold:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 0 var(--color-gold-3);
+  }
+  .btn-hi {
+    background: var(--color-hi);
+    color: var(--color-ink);
+    box-shadow: 0 5px 0 var(--color-ink);
+  }
+  .btn-hi:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 0 var(--color-ink);
+  }
+  .btn-line {
+    box-shadow: inset 0 0 0 2px currentColor;
+  }
+  .btn-line:hover {
+    background: var(--color-ink);
+    color: var(--color-paper);
+    box-shadow: inset 0 0 0 2px var(--color-ink);
+  }
+
+  .card {
+    background: var(--color-sheet);
+    border: 1.5px solid var(--color-ink);
+    border-radius: 26px;
+    box-shadow: 6px 6px 0 var(--color-ink);
+  }
+
+  /* the ticker under the hero */
+  .ticker {
+    display: flex;
+    width: max-content;
+    animation: ticker 38s linear infinite;
+  }
+  @keyframes ticker {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  .wobble {
+    animation: wobble 6s ease-in-out infinite;
+  }
+  @keyframes wobble {
+    0%,
+    100% {
+      transform: rotate(var(--r, -6deg)) translateY(0);
+    }
+    50% {
+      transform: rotate(calc(var(--r, -6deg) * -0.4)) translateY(-6px);
+    }
+  }
+  .coin {
+    animation: coin 7s ease-in-out var(--d, 0s) infinite;
+  }
+  @keyframes coin {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0);
+    }
+    50% {
+      transform: translateY(-14px) rotate(14deg);
+    }
+  }
+  .spin-slow {
+    animation: spin 26s linear infinite;
+  }
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  .pop {
+    animation: pop 0.6s cubic-bezier(0.3, 1.6, 0.5, 1) both;
+  }
+  @keyframes pop {
+    from {
+      opacity: 0;
+      transform: scale(0.85) translateY(10px);
+    }
+  }
+  .rise {
+    animation: rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(18px);
+    }
+  }
+  .reveal-armed {
+    opacity: 0;
+    transform: translateY(26px);
+    transition:
+      opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0ms),
+      transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0ms);
+  }
+  .reveal-armed.reveal-in {
+    opacity: 1;
+    transform: none;
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .prose-br p {
+    margin-top: 1.1rem;
+    color: var(--color-ink-2);
+    font-size: 17.5px;
+    line-height: 1.75;
+  }
+  .prose-br p:first-child {
+    margin-top: 0;
+    color: var(--color-ink);
+    font-size: 20px;
+    line-height: 1.6;
+  }
+
+  /* range input in the brand colours */
+  .range {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 10px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--color-gold) var(--p, 50%), var(--color-cream) var(--p, 50%));
+    outline: none;
+  }
+  .range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 999px;
+    background: var(--color-hi);
+    border: 3px solid var(--color-ink);
+    cursor: grab;
+  }
+  .range::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    background: var(--color-hi);
+    border: 3px solid var(--color-ink);
+    cursor: grab;
+  }
+  .range:focus-visible::-webkit-slider-thumb {
+    outline: 3px solid var(--color-pink);
+    outline-offset: 2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
