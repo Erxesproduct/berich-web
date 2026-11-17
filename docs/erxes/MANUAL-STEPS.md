@@ -73,3 +73,15 @@ Zochil: `has_qpay: false`, no payment methods set, rule «Төлбөр буца�
 
 Website (done): checkout offers **QPay** and **Дансаар**, validated on the server and written in the order message
 (`Төлбөр: …`). The «Төлбөр буцаагдахгүй» rule is shown on /info and in the checkout.
+
+## 1.3 eBarimt setup
+
+Zochil has no eBarimt setting for this shop (`regno: null`).
+
+1. Collect from Be rich: TIN (person or company?), district code, VAT status, product classification codes
+   (printed matter for the notebooks, food for the pear paste, electronics accessories for the selfie stand).
+2. Register for **PosAPI 3.0** (ebarimt.mn → Business → PosAPI) and install the PosAPI service.
+3. **Settings → eBarimt → Add**: PosAPI URL, TIN, district code, VAT switches; assign it to the website pipeline.
+
+Website (done): checkout asks «Хувь хүн» or «Байгууллага»; a company needs a 7-digit registry number, validated on
+the server.
