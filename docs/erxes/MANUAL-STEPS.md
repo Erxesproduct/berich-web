@@ -61,3 +61,15 @@ Steps:
 Name tidy-ups on the website: the Zochil code is dropped from the name («Be rich дэвтэр (12-1296-01)» → «Be rich
 дэвтэр», «Лийрийн охь (12-1296-05)» → «Лийрийн охь») and «Сельфи хөл-ЖИЖИГ (12-1296-04)» → «Сельфи хөл · жижиг».
 The codes are kept in the `zochilCode` column.
+
+## 1.2 Payment setup (QPay)
+
+Zochil: `has_qpay: false`, no payment methods set, rule «Төлбөр буцаагдахгүй» (no refunds).
+
+1. Get Be rich's QPay merchant credentials: `client_id`, `client_secret`, `invoice_code`. Owner: Terbish / Be rich.
+2. **Settings → Payments → Add → QPay**: enter them. **Settings → Payments → (QPay) → Test**: a 100₮ invoice.
+3. **Settings → Payments → Add → Bank transfer**: the account staff send to customers.
+4. **Sales → Pipelines → «Вэбсайт» → Settings → Payments**: select QPay and bank transfer.
+
+Website (done): checkout offers **QPay** and **Дансаар**, validated on the server and written in the order message
+(`Төлбөр: …`). The «Төлбөр буцаагдахгүй» rule is shown on /info and in the checkout.
