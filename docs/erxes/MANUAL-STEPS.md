@@ -85,3 +85,22 @@ Zochil has no eBarimt setting for this shop (`regno: null`).
 
 Website (done): checkout asks «Хувь хүн» or «Байгууллага»; a company needs a 7-digit registry number, validated on
 the server.
+
+## 1.4 Delivery zones, fees and order statuses
+
+**Website (done)**, from the Zochil delivery option and rule:
+
+| Option | Fee | Free over | Area | Time |
+| --- | --- | --- | --- | --- |
+| Улаанбаатар | 7,000₮ | 22,000₮ | «7 буудал, Нисэх, Шар хад, Орбитын тойрог хүртэл… Бүсээс гадуурх хаягаар хүргэлт хийгдэхгүй» | 48–72 цаг, төлбөр баталгаажсаны дараа |
+
+- Same rule as Zochil's checkout code: the fee is 0 when the goods total is **over** 22,000₮. The server recomputes
+  it; the browser cannot change it. Rules are in `src/content/business.ts`.
+- Countryside is not offered online (the zone text excludes it).
+
+**erxes (manual):**
+
+1. Import `docs/erxes/berich-delivery.csv`: service `DELIVERY-UB` (7,000₮, free over 22,000₮).
+2. **Sales → Boards → «Онлайн захиалга» → pipeline «Вэбсайт»**, stages: Шинэ захиалга → Төлбөр хүлээгдэж буй →
+   Төлбөр баталгаажсан → Бэлтгэж байна → Хүргэлтэд гарсан → Хүргэгдсэн, plus «Цуцлагдсан».
+3. **Frontline → Forms → (order form) → Settings**: create a sales card in «Шинэ захиалга» for every submission.
