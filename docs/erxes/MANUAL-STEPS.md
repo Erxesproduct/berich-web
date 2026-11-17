@@ -104,3 +104,36 @@ the server.
 2. **Sales → Boards → «Онлайн захиалга» → pipeline «Вэбсайт»**, stages: Шинэ захиалга → Төлбөр хүлээгдэж буй →
    Төлбөр баталгаажсан → Бэлтгэж байна → Хүргэлтэд гарсан → Хүргэгдсэн, plus «Цуцлагдсан».
 3. **Frontline → Forms → (order form) → Settings**: create a sales card in «Шинэ захиалга» for every submission.
+
+## 1.5 Test order from cart to receipt
+
+**Verified on a local production build:** `npm run test:order -- http://localhost:3124` passes 19 cases: empty cart,
+unknown product, more than the stock (Лийрийн охь, 10), quantity over 20; Улаанбаатар totals with the free-delivery
+rule; bank transfer accepted; loan apps, countryside, unknown delivery and payment rejected; missing address;
+company registry rejected and accepted; phone (incl. +976), email, honeypot. Without erxes the order returns
+`503 not_configured` and the checkout shows the phone number, the reference (`BR-YYMMDD-XXXX`) and the total.
+
+Steps for a real test order:
+
+1. **Frontline → Forms → Create** «Вэбсайт захиалга» with fields Нэр, Утас, Имэйл, Захиалга. Copy the form id and
+   the field ids.
+2. In Vercel set `ERXES_API_URL`, `ERXES_ORDER_FORM_ID`, `ERXES_ORDER_FIELD_IDS`, then redeploy.
+3. Run `npm run test:order -- https://<production url> --send`. Expect **107,600₮**: 2 × Лийрийн охь (34,000₮),
+   Be rich дэвтэр (39,600₮), free delivery.
+4. In erxes: find the submission and its card → send the QPay invoice and pay it → issue the eBarimt → move the card
+   to «Хүргэгдсэн» → void the test order.
+
+---
+
+## Open questions for Be rich
+
+1. **Delivery is always free in practice**: the free limit is 22,000₮ and the cheapest product is 34,000₮. Intended,
+   or should the limit be higher?
+2. Zochil has `delivery_is_countryside: 1`, but the zone text says no delivery outside the zone. Countryside or not?
+3. QPay merchant and the bank account to give customers.
+4. TIN / PosAPI for eBarimt (1.3).
+5. The FAQ mentions the misprinted «11 сартай» notebook sold at 22,000₮. It is not in the shop: still on sale?
+6. Founder name in Cyrillic: the site writes «Болортуяа Баяраа» from Instagram's «Bolortuya Bayaraa». Correct?
+7. Zochil marks both notebook products `has_delivery: false` but others `true`. Do notebooks ship the same way?
+8. Two Facebook links exist (berichclubbolortuya and profile.php?id=100089922996719). The site uses the first.
+9. The savings calculator uses an example 10% rate and says it is not financial advice. OK to keep?
